@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tabla de frecuencias</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+
+        <h1 class="text-center">Datos agrupados</h1>
+        <br>
+        <form action="">
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="limiteInferior" placeholder="Limite inferior"
+                            onchange="validarDatos()" oninput="validarDatos()">
+                        <label for="limiteInferior">Limite inferior del intervalo</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="limiteSuperior" placeholder="Limite superior"
+                            onchange="validarDatos()" oninput="validarDatos()">
+                        <label for="limiteSuperior">Limite superior del intervalo</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="frecuencia" placeholder="Frecuencia absoluta"
+                            onchange="validarDatos()" oninput="validarDatos()">
+                        <label for="frecuencia">Frecuencia absoluta del intervalo (fi)</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="amplitud" placeholder="amplitud" value="0"
+                            disabled>
+
+                        <label for="amplitud">Amplit</label>
+                    </div>
+                </div>
+
+            </div>
+            <div id="validar"></div>
+
+        </form>
+        <br>
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <input type="button" class="btn btn-primary" value="Agregar" id="agregar_intervalo" disabled
+                    onclick="agregar()">
+            </div>
+
+            
+
+        </div>
+        <br>
+        <hr>
+        <h5>Aquí irán apareciendo los datos agregados</h5>
+        <div class="row">
+
+            <div class="col-4">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Li</th>
+                            <th scope="col">Ls</th>
+                            <th scope="col">fi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider" id="tabla">
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3">
+                <button type="button" class="btn btn-success float-end" value="Calcular" id="calcular" disabled onclick="calcular()">Calcular</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-danger" value="Calcular" id="calcular" onclick="limpiar()">Limpiar</button>
+            </div>
+        </div>
+        <br>
+
+        <hr><br>
+        <div>
+            <h2>Tabla de frecuencias</h2>
+            <p>La tabla de frecuencias se calcula a partir de la sumatoria de las frecuencias absolutas</p>
+            <p>Servirá para calcular el promedio, moda, mediana, cuartiles, deciles y percentiles</p>
+            <div class="container">
+                <table class="table table-sm table-striped table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Li</th>
+                            <th scope="col">Ls</th>
+                            <th scope="col">Xi</th>
+                            <th scope="col">fi</th>
+                            <th scope="col">Fi</th>
+                            <th scope="col">hi</th>
+                            <th scope="col">Hi</th>
+                            <th scope="col">Xi*fi</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider" id="tabla_2">
+
+
+                    </tbody>
+                </table>
+
+                <br>
+                <h3>Media o promedio</h3>
+                <h5 id="media"></h5>
+                <br>
+                <h3>Mediana</h3>
+                <h5 id="mediana"></h5>
+                <br>
+                <h3>Moda</h3>
+                <h5 id="moda"></h5>
+                <br>
+                <h3>Cuartiles</h3>
+                <div id="cuartiles"></div>
+                <br>
+                <h3>Deciles</h3>
+                <div id="deciles"></div>
+                <br>
+                <h3>Percentiles</h3>
+                <div id="percentiles" class="text-center"></div>
+            </div>
+
+            <br>
+            <hr>
+            <br>
+            <h2>Tabla de frecuencias extendida</h2>
+            <p>La tabla de frecuencias se calcula a partir de la sumatoria de las frecuencias absolutas</p>
+            <p>Servirá para calcular Varianza, desviacion estandar, simetria y curtosis</p>
+            <br>
+            <div class="container">
+                <table class="table table-sm table-striped table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Li</th>
+                            <th scope="col">Ls</th>
+                            <th scope="col">Xi</th>
+                            <th scope="col">fi</th>
+                            <th scope="col">Fi</th>
+                            <th scope="col">hi</th>
+                            <th scope="col">Hi</th>
+                            <th scope="col">Xi*fi</th>
+
+                            <th scope="col">Xi-x</th>
+                            <th scope="col">fi*(xi-x)<sup>2</sup></th>
+                            <th scope="col">fi*(xi-x)<sup>3</sup></th>
+                            <th scope="col">fi*(xi-x)<sup>4</sup></th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider" id="tabla_3">
+
+
+                    </tbody>
+                </table>
+                <br>
+                <h3>Varianza</h3>
+                <h5 id="varianza"></h5>
+                <br>
+                <h3>Desviación estándar</h3>
+                <div id="desv_estandar"></div>
+                <br>
+                <h3>Coeficiente de variación</h3>
+                <div id="coeficiente"></div>
+                <br>
+                <h3>Asimetría</h3>
+                <div id="asimetria"></div>
+                <br>
+                <h3>Curtosis</h3>
+                <div id="curtosis"></div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <script src="./script.js">
+
+    </script>
+</body>
+
+</html>
